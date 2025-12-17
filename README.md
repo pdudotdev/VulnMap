@@ -108,6 +108,10 @@ Contains:
 - Successful brute-force attempts
 - Successfully brute-forced ports
 
+## Example Console Output
+
+[!ss1](resources/ss1.png)
+
 ### Visualization
 
     network_scan_plot.png
@@ -117,14 +121,7 @@ Scatter plot:
 - Y-axis: Successful brute-force attacks
 - Color scale: Overall risk level
 
-## Example Console Output
-
-    |---> Host: 192.168.56.101
-      |--- Open TCP Ports: 22, 80
-      |--- Exploitable Vulnerabilities: 5
-      ||--- See more details on potential exploits using: nmap -sV --script vulners <IP>
-      |--- Successful Brute Force Attacks: 1
-      |--- Successfully Brute-Forced Ports: 22
+[!ss2](resources/network_scan_plot.png)
 
 ## Email Reporting (Optional)
 
