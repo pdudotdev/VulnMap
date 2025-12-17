@@ -8,8 +8,6 @@ It performs host discovery, service enumeration, vulnerability detection, option
 ⚠️ **This tool is intended for educational purposes and authorized security testing only.**  
 Running it against systems you do not own or explicitly have permission to test is illegal.
 
----
-
 ## Features
 
 - Network host discovery using Nmap ping scans
@@ -20,8 +18,6 @@ Running it against systems you do not own or explicitly have permission to test 
 - Tree-style console output for readability
 - Scatter plot visualization of vulnerabilities vs. brute-force success
 - Optional email reporting (commented out by default)
-
----
 
 ## Network Scope
 
@@ -38,14 +34,12 @@ You can modify this directly in the script:
     hosts = "192.168.56.0/24"
     nm.scan(hosts=hosts, arguments='-sn --exclude 192.168.56.110')
 
----
-
 ## Brute Force Capabilities
 
 The script attempts brute-force attacks only on predefined ports using Nmap NSE scripts:
 
-| Port | Service        | Script Used    |
-|------|----------------|----------------|
+| Port | Service        | Script Used   |
+|------|----------------|---------------|
 | 21   | FTP            | ftp-brute     |
 | 22   | SSH            | ssh-brute     |
 | 23   | Telnet         | telnet-brute  |
@@ -60,11 +54,9 @@ The script attempts brute-force attacks only on predefined ports using Nmap NSE 
 
 Credentials are loaded from a file named:
 
-    my.txt
+    credentials.txt
 
 You must create and populate this file manually.
-
----
 
 ## Requirements
 
@@ -82,8 +74,6 @@ Install Nmap:
 Install required Python libraries:
 
     pip install python-nmap pandas numpy matplotlib colorama
-
----
 
 ## How It Works
 
@@ -104,8 +94,6 @@ Install required Python libraries:
    - Console (tree format)
    - network_scan_results.csv
    - network_scan_plot.png
-
----
 
 ## Output Files
 
@@ -129,8 +117,6 @@ Scatter plot:
 - Y-axis: Successful brute-force attacks
 - Color scale: Overall risk level
 
----
-
 ## Example Console Output
 
     |---> Host: 192.168.56.101
@@ -139,8 +125,6 @@ Scatter plot:
       ||--- See more details on potential exploits using: nmap -sV --script vulners <IP>
       |--- Successful Brute Force Attacks: 1
       |--- Successfully Brute-Forced Ports: 22
-
----
 
 ## Email Reporting (Optional)
 
@@ -152,8 +136,6 @@ To enable it:
 3. The script will send:
    - Tree-formatted report
    - Attached network visualization image
-
----
 
 ## Security & Legal Disclaimer
 
@@ -170,23 +152,12 @@ Only use it on:
 
 The author is not responsible for misuse or damage caused by this script.
 
----
-
 ## Future Improvements
 
 - Support multiple credential files
 - Export to HTML or PDF reports
 - Risk scoring per host
 
----
-
 ## License
 
-This project is provided for educational and research purposes only.  
-No warranty is provided. Use responsibly.
-
----
-
-## Author
-
-Created for learning, experimentation, and controlled security testing environments.
+DHushCP is licensed under the **GNU GENERAL PUBLIC LICENSE Version 3**.
