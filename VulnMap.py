@@ -2,7 +2,6 @@ import nmap
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-import matplotlib.colors as mcolors
 from pprint import pprint
 from colorama import Fore, Style
 import smtplib
@@ -11,6 +10,9 @@ from email.mime.text import MIMEText
 from email.mime.base import MIMEBase
 from email import encoders
 
+# Supress Matplotlib deprecation warnings
+import warnings
+warnings.filterwarnings("ignore")
 
 # Initialize the nmap scanner
 nm = nmap.PortScanner()
@@ -140,71 +142,64 @@ print(tree_structure)
 df['Distance'] = np.sqrt(df['Exploitable Vulnerabilities']**2 + df['Successful Brute Force Attacks']**2)
 df['Normalized Distance'] = (df['Distance'] - df['Distance'].min()) / (df['Distance'].max() - df['Distance'].min())
 
-# Create a figure and a set of subplots
-fig, ax = plt.subplots(figsize=(10, 6))
+# Matplotlib visualization
+plt.figure(figsize=(10, 6))
 
 # Scatter plot with colors based on normalized distance
 colors = plt.cm.Reds(df['Normalized Distance'])
-scatter = ax.scatter(df['Exploitable Vulnerabilities'], df['Successful Brute Force Attacks'], s=100, c=colors)
+plt.scatter(df['Exploitable Vulnerabilities'], df['Successful Brute Force Attacks'], s=100, c=colors)
 
 # Annotate each point with the IP address
 for i in range(len(df)):
-    ax.text(df['Exploitable Vulnerabilities'][i], df['Successful Brute Force Attacks'][i], df['IP'][i], fontsize=9)
+    plt.text(df['Exploitable Vulnerabilities'][i], df['Successful Brute Force Attacks'][i], df['IP'][i], fontsize=9)
 
 # Plot data
-ax.set_title('Network Scan Results')
-ax.set_xlabel('Number of Exploitable Vulnerabilities')
-ax.set_ylabel('Number of Successful Brute Force Attacks')
-ax.grid(True)
+plt.title('Network Scan Results')
+plt.xlabel('Number of Exploitable Vulnerabilities')
+plt.ylabel('Number of Successful Brute Force Attacks')
+plt.grid(True)
 
-# Create a ScalarMappable and use it for the colorbar
-norm = mcolors.Normalize(vmin=df['Normalized Distance'].min(), vmax=df['Normalized Distance'].max())
-sm = plt.cm.ScalarMappable(cmap=plt.cm.Reds, norm=norm)
-sm.set_array([])  # You need to set an array for the ScalarMappable, even if it's empty
-
-# Create an axes for the colorbar
-cax = fig.add_axes([0.92, 0.1, 0.02, 0.8])
-
-# Create the colorbar in the specified axes
-cbar = fig.colorbar(sm, cax=cax)
-cbar.set_label('Vulnerability Scale')
+# Plot the colorbar (Vulnerability Scale)
+plt.colorbar(plt.cm.ScalarMappable(cmap=plt.cm.Reds), label='Vulnerability Scale')
 
 # Save the plot as an image file
 plot_filename = "network_scan_plot.png"
 plt.savefig(plot_filename)
-plt.show()
+#plt.show()
 
+'''
 # Email configuration
-# smtp_server = 'smtp.example.com'
-# smtp_port = 587
-# smtp_user = 'your_email@example.com'
-# smtp_password = 'your_password'
-# sender_email = 'your_email@example.com'
-# receiver_email = 'receiver_email@example.com'
-# subject = 'Network Scan Report'
-# body = f'Please find attached the network scan report.\n\n{tree_structure}'
+smtp_server = 'smtp.example.com'
+smtp_port = 587
+smtp_user = 'your_email@example.com'
+smtp_password = 'your_password'
+sender_email = 'your_email@example.com'
+receiver_email = 'receiver_email@example.com'
+subject = 'Network Scan Report'
+body = f'Please find attached the network scan report.\n\n{tree_structure}'
 
 # Create the email message
-# msg = MIMEMultipart()
-# msg['From'] = sender_email
-# msg['To'] = receiver_email
-# msg['Subject'] = subject
-# msg.attach(MIMEText(body, 'plain'))
+msg = MIMEMultipart()
+msg['From'] = sender_email
+msg['To'] = receiver_email
+msg['Subject'] = subject
+msg.attach(MIMEText(body, 'plain'))
 
 # Attach the plot image
-# with open(plot_filename, 'rb') as f:
-#     mime = MIMEBase('image', 'png', filename=plot_filename)
-#     mime.add_header('Content-Disposition', 'attachment', filename=plot_filename)
-#     mime.add_header('X-Attachment-Id', '0')
-#     mime.add_header('Content-ID', '<0>')
-#     mime.set_payload(f.read())
-#     encoders.encode_base64(mime)
-#     msg.attach(mime)
+with open(plot_filename, 'rb') as f:
+    mime = MIMEBase('image', 'png', filename=plot_filename)
+    mime.add_header('Content-Disposition', 'attachment', filename=plot_filename)
+    mime.add_header('X-Attachment-Id', '0')
+    mime.add_header('Content-ID', '<0>')
+    mime.set_payload(f.read())
+    encoders.encode_base64(mime)
+    msg.attach(mime)
 
 # Send the email
-# with smtplib.SMTP(smtp_server, smtp_port) as server:
-#     server.starttls()
-#     server.login(smtp_user, smtp_password)
-#     server.sendmail(sender_email, receiver_email, msg.as_string())
+with smtplib.SMTP(smtp_server, smtp_port) as server:
+    server.starttls()
+    server.login(smtp_user, smtp_password)
+    server.sendmail(sender_email, receiver_email, msg.as_string())
 
-# print("Email sent successfully.")
+print("Email sent successfully.")
+'''
