@@ -110,7 +110,7 @@ Contains:
 
 ## Example Console Output
 
-[!ss1](resources/ss1.png)
+![ss1](resources/ss1.png)
 
 ### Visualization
 
@@ -121,7 +121,7 @@ Scatter plot:
 - Y-axis: Successful brute-force attacks
 - Color scale: Overall risk level
 
-[!ss2](resources/network_scan_plot.png)
+![ss2](resources/network_scan_plot.png)
 
 ## Email Reporting (Optional)
 
